@@ -24,34 +24,6 @@
         background-size: 10%; /* 이미지 크기를 50%로 줄임 */
         opacity: 0.7;
     }
-
-    #modalOpenButton, #modalCloseButton {
-        cursor: pointer;
-    }
-
-    #modalContainer {
-      width: 100%;
-      height: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.5);
-    }
-
-    #modalContent {
-      position: absolute;
-      background-color: #ffffff;
-      width: 300px;
-      height: 150px;
-      padding: 15px;
-    }
-
-    #modalContainer.hidden {
-      display: none;
-    }
 </style>
 <body>
 <!-- Responsive navbar-->
@@ -92,7 +64,11 @@
             <div class="m-4 m-lg-5">
                 <h1 class="display-5 fw-bold">Welcome to Daily!</h1>
                 <p class="fs-4">날마다 반복되는 3감사 3회개로 여러분들의 하루에 대해서 기록하고 되돌아보세요! Daily는 여러분들이 더 발전할 수 있도록 도와주는 서비스입니다. 하루에 한번만 글을 작성할 수 있습니다!</p>
-                <a class="btn btn-primary btn-lg" id="modalOpenButton" >Daily 작성하기</a>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Daily 작성하기
+                </button>
             </div>
         </div>
     </div>
@@ -107,43 +83,53 @@
     </div>
 </section>
 
-<!-- 모달 창-->
-<div id="modalContainer" class="hidden">
-    <div id="modalContent">
-        <form id="daily-form">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="itIsPublic" name="itIsPublic" value="true">
-                <label class="form-check-label" for="itIsPublic">
-                    공개 여부
-                </label>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Daily 작성하기</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <label for="thanks1">감사1</label>
-                <input type="text" class="form-control" id="thanks1" name="thanks1">
+            <div class="modal-body">
+                <form id="daily-form">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="itIsPublic" name="itIsPublic" value="true">
+                        <label class="form-check-label" for="itIsPublic">
+                            공개 여부
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="thanks1">감사1</label>
+                        <input type="text" class="form-control" id="thanks1" name="thanks1">
+                    </div>
+                    <div class="form-group">
+                        <label for="thanks2">감사2</label>
+                        <input type="text" class="form-control" id="thanks2" name="thanks2">
+                    </div>
+                    <div class="form-group">
+                        <label for="thanks3">감사3</label>
+                        <input type="text" class="form-control" id="thanks3" name="thanks3">
+                    </div>
+                    <div class="form-group">
+                        <label for="penitence1">회개1</label>
+                        <input type="text" class="form-control" id="penitence1" name="penitence1">
+                    </div>
+                    <div class="form-group">
+                        <label for="penitence2">회개2</label>
+                        <input type="text" class="form-control" id="penitence2" name="penitence2">
+                    </div>
+                    <div class="form-group">
+                        <label for="penitence3">회개3</label>
+                        <input type="text" class="form-control" id="penitence3" name="penitence3">
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="thanks2">감사2</label>
-                <input type="text" class="form-control" id="thanks2" name="thanks2">
+            <div class="modal-footer">
+                <button id="modalCloseButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="submit-daily-form" type="button" class="btn btn-primary" onclick="ajax_send()" value="call">저장</button>
             </div>
-            <div class="form-group">
-                <label for="thanks3">감사3</label>
-                <input type="text" class="form-control" id="thanks3" name="thanks3">
-            </div>
-            <div class="form-group">
-                <label for="penitence1">회개1</label>
-                <input type="text" class="form-control" id="penitence1" name="penitence1">
-            </div>
-            <div class="form-group">
-                <label for="penitence2">회개2</label>
-                <input type="text" class="form-control" id="penitence2" name="penitence2">
-            </div>
-            <div class="form-group">
-                <label for="penitence3">회개3</label>
-                <input type="text" class="form-control" id="penitence3" name="penitence3">
-            </div>
-        </form>
-        <button id="submit-daily-form" onclick="ajax_send()" value="call">저장</button>
-        <button id="modalCloseButton">닫기</button>
+        </div>
     </div>
 </div>
 
@@ -156,22 +142,11 @@
 </footer>
 
 </body>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modalOpenButton = document.getElementById('modalOpenButton');
-        const modalCloseButton = document.getElementById('modalCloseButton');
-        const modal = document.getElementById('modalContainer');
-
-        modalOpenButton?.addEventListener('click', () => {
-            modal.classList.remove('hidden');
-        });
-
-        modalCloseButton?.addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
-    });
-
     function ajax_send(){
 
         console.log("ajax_send fn activate");
@@ -291,7 +266,7 @@
                                           "<li class='list-group-item'>" + postList.thanks2 + "</li>" +
                                           "<li class='list-group-item'>" + postList.thanks3 + "</li>" +
                                         "</ul>" +
-                                        "<br />" + 
+                                        "<br />" +
                                         "<p class='mb-0'>회개</p>" +
                                         "<ul class='list-group'>" +
                                           "<li class='list-group-item'>" + postList.penitence1 + "</li>" +
@@ -320,5 +295,6 @@
             }
         });
     }
+
 </script>
 </html>
