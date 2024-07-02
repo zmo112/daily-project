@@ -25,6 +25,7 @@ public class DailyRestController {
         if (userDetails == null) {
             return new ResponseEntity<>(dailyService.getDailies("anonymous", offset, limit), HttpStatus.OK);
         }
+
         return new ResponseEntity<>(dailyService.getDailies(userDetails.getUsername(), offset, limit), HttpStatus.OK);
     }
 
@@ -37,6 +38,10 @@ public class DailyRestController {
     // 홈에서 띄워지는 Daily
     @GetMapping("/my/dailies/{offset}/{limit}")
     public ResponseEntity<DailyDTO.ResponseDTOs> getMyDailies(@AuthenticationPrincipal UserDetails userDetails, @PathVariable int offset, @PathVariable int limit){
+
+        if (userDetails == null) {
+            return new ResponseEntity<>(dailyService.getMyDailies("anonymous", offset, limit), HttpStatus.OK);
+        }
 
         return new ResponseEntity<>(dailyService.getMyDailies(userDetails.getUsername(), offset, limit), HttpStatus.OK);
     }

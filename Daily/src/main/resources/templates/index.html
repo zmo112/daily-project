@@ -153,7 +153,7 @@
 
         var dataSerialized = $("#daily-form");
 
-        var data = $("#daily-form").serializeObject()
+        var data = $("#daily-form").serializeObject();
 
         var dataJson = JSON.stringify(data);
 
@@ -174,7 +174,7 @@
 
     }
 
-
+    // 직렬화 메서드
     jQuery.fn.serializeObject = function() {
     var obj = null;
     try {
@@ -195,6 +195,7 @@
     return obj;
     };
 
+    // 무한 스크롤 기능
     // false이면 무한스크롤 중지 (모든 게시물 출력상태)
     // 초기값 true로 설정했습니디.
     var postScroll = true;
@@ -213,7 +214,6 @@
         }
     });
 
-    // 무한 스크롤 기능
     function scrollHandler() {
         console.log("scorll이 감지 되었습니다.");
 
