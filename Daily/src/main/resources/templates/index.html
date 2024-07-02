@@ -10,6 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+    <!-- Alert Library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </head>
 <style>
     #loadingImage {
@@ -23,6 +26,10 @@
         background: url('R1280x0-16.gif') 50% 50% no-repeat rgb(249, 249, 249);
         background-size: 10%; /* 이미지 크기를 50%로 줄임 */
         opacity: 0.7;
+    }
+
+    #daily-form .input-group {
+        margin-bottom: 20px; /* 각 입력 그룹 아래에 20px의 여백을 추가 */
     }
 </style>
 <body>
@@ -93,35 +100,33 @@
             </div>
             <div class="modal-body">
                 <form id="daily-form">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="itIsPublic" name="itIsPublic" value="true">
-                        <label class="form-check-label" for="itIsPublic">
-                            공개 여부
-                        </label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="itIsPublic" name="itIsPublic" value="true" role="switch">
+                        <label class="form-check-label" for="itIsPublic">공개 여부</label>
                     </div>
-                    <div class="form-group">
-                        <label for="thanks1">감사1</label>
-                        <input type="text" class="form-control" id="thanks1" name="thanks1">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text" id="input-thanks1">감사1</span>
+                        <textarea class="form-control" id="thanks1" name="thanks1" aria-label="thanks1" aria-describedby="inputGroup-sizing-lg"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="thanks2">감사2</label>
-                        <input type="text" class="form-control" id="thanks2" name="thanks2">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text" id="input-thanks2">감사2</span>
+                        <textarea class="form-control" id="thanks2" name="thanks2" aria-label="thanks2" aria-describedby="inputGroup-sizing-lg"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="thanks3">감사3</label>
-                        <input type="text" class="form-control" id="thanks3" name="thanks3">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text" id="input-thanks3">감사3</span>
+                        <textarea class="form-control" id="thanks3" name="thanks3" aria-label="thanks3" aria-describedby="inputGroup-sizing-lg"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="penitence1">회개1</label>
-                        <input type="text" class="form-control" id="penitence1" name="penitence1">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text" id="input-penitence1">회개1</span>
+                        <textarea class="form-control" id="penitence1" name="penitence1" aria-label="penitence1" aria-describedby="inputGroup-sizing-lg"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="penitence2">회개2</label>
-                        <input type="text" class="form-control" id="penitence2" name="penitence2">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text" id="input-penitence2">회개2</span>
+                        <textarea class="form-control" id="penitence2" name="penitence2" aria-label="penitence2" aria-describedby="inputGroup-sizing-lg"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="penitence3">회개3</label>
-                        <input type="text" class="form-control" id="penitence3" name="penitence3">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text" id="input-penitence3">회개2</span>
+                        <textarea class="form-control" id="penitence3" name="penitence3" aria-label="penitence3" aria-describedby="inputGroup-sizing-lg"></textarea>
                     </div>
                 </form>
             </div>
@@ -147,6 +152,20 @@
 <!-- Core theme JS-->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
+    // alert
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'center-center',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    });
+
+
     function ajax_send(){
 
         console.log("ajax_send fn activate");
@@ -163,11 +182,31 @@
             method : 'POST',
             contentType: 'application/json',
             success : function(data){
-                alert("성공 하였습니다!");
-                location.reload();
+                $("#daily-form")[0].reset();
+
+                $('#staticBackdrop').modal('hide');
+
+                Toast.fire({
+                  icon: 'success',
+                  title: '정상적으로 등록하였습니다.'
+                });
+
+                // 해당 방식은 부드러운 방법은 아닌 듯 하다 추후 변경하기
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
             },
+
             error : function(request, status, error){
-                alert("실패 하였습니다!");
+                $("#daily-form")[0].reset();
+
+                $('#staticBackdrop').modal('hide');
+
+                Toast.fire({
+                  icon: 'error',
+                  title: '이미 오늘 작성된 글이 있습니다.'
+                });
+
                 console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             },
         });
@@ -185,7 +224,7 @@
                 jQuery.each(arr, function() {
                     obj[this.name] = this.value;
                 });
-            }//if ( arr ) {
+            }
         }
     } catch (e) {
         alert(e.message);
@@ -194,6 +233,7 @@
 
     return obj;
     };
+
 
     // 무한 스크롤 기능
     // false이면 무한스크롤 중지 (모든 게시물 출력상태)
@@ -234,6 +274,8 @@
 
     //게시글 목록 출력
     function postListDisplay(startId, limit) {
+
+        console.log("get in postListDisplay()");
 
         $.ajax({
             method: "GET",
