@@ -9,8 +9,8 @@ spring:
       url: jdbc:h2:~/test/lof?useUnicode=true&characterEncoding=utf8;
     properties:
       hibernate:
-        format_sql: false
-#        format_sql: true
+#        format_sql: false
+        format_sql: true
   sql:
     init:
       mode: always
@@ -24,8 +24,8 @@ jwt:
 
 logging:
   level:
-#    org.hibernate.SQL: debug
-    org.hibernate.SQL: warn
+    org.hibernate.SQL: debug
+#    org.hibernate.SQL: warn
     org.hibernate.type: trace
 
 

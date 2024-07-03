@@ -2,9 +2,6 @@ package com.HelloWorld.Daily.controller;
 
 import com.HelloWorld.Daily.dto.MemberDTO;
 import com.HelloWorld.Daily.service.MemberService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +53,7 @@ public class MemberController {
 
         return "redirect:login";
     }
-    
+
     // 로그인 - GET
     @RequestMapping("/login")
     public String login(@ModelAttribute MemberDTO.RequestDTO requestDTO, Model model) {

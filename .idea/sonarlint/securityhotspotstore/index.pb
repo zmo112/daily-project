@@ -57,3 +57,5 @@ s
 CDaily/src/test/java/com/HelloWorld/Daily/DailyApplicationTests.java,f/c/fce9ae8358f971211e28d46868340499e45b850e
 x
 HDaily/src/main/java/com/HelloWorld/Daily/controller/DailyController.java,2/6/262a2ced2b6f0e86db146f94a6e8fc34c5f3d4b0
+p
+@Daily/src/main/java/com/HelloWorld/Daily/common/ApiResponse.java,8/5/85c7b96733116c81b59b97a8412d9696157ac6bb
