@@ -2,6 +2,9 @@ package com.HelloWorld.Daily.controller;
 
 import com.HelloWorld.Daily.dto.MemberDTO;
 import com.HelloWorld.Daily.service.MemberService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +33,8 @@ public class MemberController {
 
         model.addAttribute("nickname", authentication.getName());
 
+        log.info("nickname : " + authentication.getName());
+
         return "index";
 
     }
@@ -38,9 +43,9 @@ public class MemberController {
     @GetMapping("/signup")
     public String signup(@ModelAttribute MemberDTO.RequestDTO requestDTO, Model model) {
 
-            model.addAttribute(requestDTO);
+        model.addAttribute(requestDTO);
 
-            return "signup";
+        return "signup";
     }
 
     // 회원가입 - POST
@@ -49,15 +54,20 @@ public class MemberController {
 
         memberService.saveMember(requestDTO);
 
-        return "index";
+        return "redirect:login";
     }
-
+    
     // 로그인 - GET
     @RequestMapping("/login")
-    public String loginForm(@ModelAttribute MemberDTO.RequestDTO requestDTO, Model model) {
+    public String login(@ModelAttribute MemberDTO.RequestDTO requestDTO, Model model) {
 
-        model.addAttribute(requestDTO);
+        if (requestDTO.getUserName() == null) {
 
-        return "login";
+            model.addAttribute(requestDTO);
+
+            return "login";
+        }
+
+        return "redirect:index";
     }
 }

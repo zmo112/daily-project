@@ -1,6 +1,7 @@
 package com.HelloWorld.Daily.jwtConfig;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -24,42 +25,42 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
-    public SecurityFilterChain filterChain(final HttpSecurity http, @Value("${jwt.exprired}") Long exprired) throws Exception {
+    public SecurityFilterChain filterChain(final HttpSecurity http, @Value("${jwt.expired}") Long expired) throws Exception {
         // 스프링부트 3.1.x~ 시큐리티 설정 방식이 변경됨. .and()를 사용하지 않음
         http
                 .csrf().disable()  // CSRF 보호 비활성화
-                .sessionManagement(configurer-> // 세션 사용안해서 STATELESS 상태로 설정
+                .sessionManagement(configurer -> // 세션 사용안해서 STATELESS 상태로 설정
                         configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize->
+                .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers("/login", "/signup", "/", "/error").permitAll() // 페이지
-                                .requestMatchers("/login/**", "/signup/**").permitAll() // API
+                                .requestMatchers("/login/**", "/signup/**", "/logout").permitAll() // API
                                 .requestMatchers("/**").permitAll() // CSS, JS 파일 허용
                                 .anyRequest().authenticated()
                 )
-                .formLogin(login -> login	// form 방식 로그인 사용
+                .formLogin(login -> login    // form 방식 로그인 사용
                         .loginPage("/login")
                         .defaultSuccessUrl("/")
                         .failureUrl("/login")
-                        .usernameParameter("userName")			// 아이디 파라미터명 설정
-                        .passwordParameter("userPassword")			// 패스워드 파라미터명 설정
+                        .usernameParameter("userName")            // 아이디 파라미터명 설정
+                        .passwordParameter("userPassword")            // 패스워드 파라미터명 설정
                         .successHandler(
                                 (request, response, authentication) -> {
-                                     JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
+                                    JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
 
-                                     String accessToken = jwtToken.getGrantType() + " " + jwtToken.getAccessToken();
+                                    String accessToken = jwtToken.getGrantType() + " " + jwtToken.getAccessToken();
 
-                                     String utf8Cookie = URLEncoder.encode(accessToken, "utf-8");
+                                    String utf8Cookie = URLEncoder.encode(accessToken, "utf-8");
 
-                                     Cookie accessCookie = new Cookie("Authorization", utf8Cookie);
-                                     accessCookie.setMaxAge(exprired.intValue());
-                                     accessCookie.setPath("/");
-                                     accessCookie.setDomain("localhost");
-                                     accessCookie.setSecure(false);
+                                    Cookie accessCookie = new Cookie("Authorization", utf8Cookie);
+                                    accessCookie.setMaxAge(expired.intValue());
+                                    accessCookie.setPath("/");
+                                    accessCookie.setDomain("localhost");
+                                    accessCookie.setSecure(false);
 
-                                     response.addCookie(accessCookie);
+                                    response.addCookie(accessCookie);
 
-                                     response.sendRedirect("/");
+                                    response.sendRedirect("/");
 
                                 })
                         .failureHandler(
@@ -71,6 +72,14 @@ public class SecurityConfig {
                         )
                         .permitAll()
                 ).addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+        http
+                .logout()
+                .logoutUrl("/logout")   // 로그아웃 처리 URL (= form action url)
+                .logoutSuccessUrl("/") // 로그아웃 성공 후 targetUrl,
+                // logoutSuccessHandler 가 있다면 효과 없으므로 주석처리.
+                .deleteCookies("Authorization"); // 로그아웃 후 삭제할 쿠키 지정
+
         return http.build();
     }
 

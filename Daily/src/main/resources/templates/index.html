@@ -47,9 +47,10 @@
                         <a class="nav-link active" aria-current="page" th:onclick="|location.href='@{/signup}'|">회원 가입</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" th:onclick="|location.href='@{/login}'|">로그인</a>
+                        <a class="nav-link" th:onclick="|location.href='@{/login}'|">로그인</a>
                     </li>
                 </div>
+
                 <!-- 로그인시 -->
                 <div th:unless="${nickname == 'anonymousUser'}">
                     <li class="nav-item">

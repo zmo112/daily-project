@@ -1,2 +1,10 @@
 
-¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ıÜÉüÿÿÿÿ8”¡ô¶ş1J$46b0fcd6-a2b9-497f-bfd9-6b41ed5187f1
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ıÜÉüÿÿÿÿ8ĞÒ€µ‡2J$c2abdb29-96cd-4f21-8331-660f2c0f1909
+‰
+java:S3457$"AFormat specifiers should be used instead of string concatenation.(¤ñÖ†úÿÿÿÿ8İÒ€µ‡2J$ee656e1e-d291-4c6a-a560-3a3db3f72182
+Z
+java:S1128"8Remove this unused import 'jakarta.servlet.http.Cookie'.(Ê‘¡¹úÿÿÿÿ8ºÆ¡µ‡2
+`
+java:S1128"DRemove this unused import 'jakarta.servlet.http.HttpServletRequest'.(õ38¼Æ¡µ‡2
+g
+java:S1128"ERemove this unused import 'jakarta.servlet.http.HttpServletResponse'.(ÂÓÕÇÿÿÿÿÿ8½Æ¡µ‡2

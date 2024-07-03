@@ -29,14 +29,14 @@ public class JwtTokenProvider {
 
     private final Key key;
 
-    private final Long exprired;
+    private final Long expired;
 
     // yml 설정 파일에서 secret 값 가져온 후 key에 저장
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretkey, @Value("${jwt.exprired}") Long exprired) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretkey, @Value("${jwt.expired}") Long expired) {
 
         byte[] keyBytes = Decoders.BASE64.decode(secretkey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
-        this.exprired = exprired;
+        this.expired = expired;
     }
 
     // Member 정보를 통해 AccessToken을 생성하는 메서드
@@ -48,7 +48,7 @@ public class JwtTokenProvider {
         long now = (new Date()).getTime();
 
         // AccessToken 생성
-        Date accessTokenExpiresIn = new Date(now + exprired);
+        Date accessTokenExpiresIn = new Date(now + expired);
 
         String accessToken = newAccessToken(authentication.getName(), authorities, accessTokenExpiresIn);
 
