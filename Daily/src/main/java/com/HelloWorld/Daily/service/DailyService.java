@@ -1,10 +1,12 @@
 package com.HelloWorld.Daily.service;
 
+import com.HelloWorld.Daily.common.MessageCode;
 import com.HelloWorld.Daily.dto.DailyDTO;
 import com.HelloWorld.Daily.entity.Daily;
 import com.HelloWorld.Daily.entity.DailyContent;
 import com.HelloWorld.Daily.entity.DailyLike;
 import com.HelloWorld.Daily.entity.Member;
+import com.HelloWorld.Daily.exception.customException.WrittenDailyInADayException;
 import com.HelloWorld.Daily.repository.DailyContentRepository;
 import com.HelloWorld.Daily.repository.DailyLikeRepository;
 import com.HelloWorld.Daily.repository.DailyRepository;
@@ -34,8 +36,6 @@ public class DailyService {
 
         List<Daily> dailies = getDailyList(offset, limit);
 
-        System.out.println("Daily Size : "  + dailies.size());
-
         return DailyDTO.ResponseDTOs.of(
                 dailies.stream().map(
                 daily -> getResponseDTO(daily, memberName)
@@ -47,8 +47,6 @@ public class DailyService {
     public DailyDTO.ResponseDTOs getMyDailies(String memberName, int offset, int limit){
 
         List<Daily> dailies = getMyDailyList(memberName, offset, limit);
-
-        System.out.println("Daily Size : "  + dailies.size());
 
         return DailyDTO.ResponseDTOs.of(
                 dailies.stream().map(
@@ -62,7 +60,7 @@ public class DailyService {
 
         // 해당 유저가 하루 내로 작성한 글이 있는지 확인 -> Exception 반환
         if (dailyRepository.findDailyInDay(memberName).isPresent()){
-            throw new RuntimeException("하루 내로 작성한 글이 이미 있습니다.");
+            throw new WrittenDailyInADayException(MessageCode.WRITTEN_DAILY_IN_A_DAY.getMessage());
         }
 
         Optional<Member> member = memberRepository.findByUserName(memberName);
