@@ -5,6 +5,7 @@ import com.HelloWorld.Daily.dto.DailyDTO;
 import com.HelloWorld.Daily.service.DailyLikeService;
 import com.HelloWorld.Daily.service.DailyService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class DailyRestController {
 
     private final DailyService dailyService;
@@ -22,6 +24,8 @@ public class DailyRestController {
     @GetMapping("/dailies/{offset}/{limit}")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<DailyDTO.ResponseDTOs> getDailies(@AuthenticationPrincipal UserDetails userDetails, @PathVariable int offset, @PathVariable int limit){
+
+        log.info("get in the method");
 
         if (userDetails == null) {
             return ApiResponse.createSuccess(dailyService.getDailies("anonymous", offset, limit));
