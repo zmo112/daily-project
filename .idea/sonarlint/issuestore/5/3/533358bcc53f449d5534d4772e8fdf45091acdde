@@ -1,10 +1,10 @@
 
 Š
-java:S1192#"GDefine a constant instead of duplicating this literal "/login" 4 times.(—ßš—8¸¬™µ‡2J$5daa1a54-c1a0-4ed8-bf02-e072c9f5ceab
-œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ïÅœ‘8º¬™µ‡2J$614ddec5-1abc-4764-9802-5f8972edca93
+java:S1192#"GDefine a constant instead of duplicating this literal "/login" 4 times.(—ßš—8¸¬™µ‡2J$81964c39-787b-46c0-a9c8-41e5f1d8afb3
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ïÅœ‘8º¬™µ‡2J$22e12518-fb0f-4329-92dc-cb1346e3ffd6
 
-java:S5738"HRemove this call to a deprecated method, it has been marked for removal.(ˆµ×ûøÿÿÿÿ8Ù¬™µ‡2J$ecb6c5c5-6d60-4942-914f-85aad2fee471
-m	java:S106C"+Replace this use of System.out by a logger.(×§şÖ8İ¬™µ‡2J$47a81213-1e62-4aa3-963e-53034418600f
-m	java:S106D"+Replace this use of System.out by a logger.(˜ŒÕ8Ş¬™µ‡2J$3b1295ba-c947-45e1-ac0e-da4be5c918aa
+java:S5738"HRemove this call to a deprecated method, it has been marked for removal.(ˆµ×ûøÿÿÿÿ8Ù¬™µ‡2J$ceb9a907-bfbf-433b-b14e-32440843bdce
+m	java:S106C"+Replace this use of System.out by a logger.(×§şÖ8İ¬™µ‡2J$db56753d-af65-46f7-8274-093884754033
+m	java:S106D"+Replace this use of System.out by a logger.(˜ŒÕ8Ş¬™µ‡2J$7db1d101-16ce-432f-860e-10cd42f46e50
 ‹
-java:S5738L"HRemove this call to a deprecated method, it has been marked for removal.(éå×¦8Ş¬™µ‡2J$a7176ee9-ffa1-44e6-b7a9-a2c16d8cd73b
+java:S5738L"HRemove this call to a deprecated method, it has been marked for removal.(éå×¦8Ş¬™µ‡2J$8c8da765-1e7f-4871-a011-174b6e9e058f

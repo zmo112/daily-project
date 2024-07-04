@@ -30,8 +30,6 @@ public class MemberController {
 
         model.addAttribute("nickname", authentication.getName());
 
-        log.info("nickname : " + authentication.getName());
-
         return "index";
 
     }

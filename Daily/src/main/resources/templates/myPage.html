@@ -128,16 +128,16 @@
           success: function(result) {
 
               // 출력 데이터가 없다면 무한스크롤을 false(중지상태)로 설정
-              if (result.responseDTOS.length === 0) {
+              if (result.data.responseDTOS.length === 0) {
                   postScroll = false;
                   console.log("더 이상 데이터가 없다요....ㅠ");
               }
 
               // 데이터가 있으면 목록 출력
-                if (result.responseDTOS.length > 0) {
+                if (result.data.responseDTOS.length > 0) {
 
-                    for (var i = 0; i < result.responseDTOS.length; i++) {
-                        var postList = result.responseDTOS[i];
+                    for (var i = 0; i < result.data.responseDTOS.length; i++) {
+                        var postList = result.data.responseDTOS[i];
 
                         var postElement2 =
                             $("<div class='col-lg-6 col-xxl-4 mb-5'>" +
