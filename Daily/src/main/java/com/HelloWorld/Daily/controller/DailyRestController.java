@@ -65,8 +65,6 @@ public class DailyRestController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<?> doDailyLike(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long dailyId){
 
-        log.info("get in the method");
-
         return ApiResponse.createSuccess(dailyLikeService.doDailyLike(userDetails, dailyId));
     }
 }

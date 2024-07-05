@@ -179,7 +179,7 @@
       }
     });
 
-
+    // Daily 작성 ajax
     function ajax_send(){
 
         console.log("ajax_send fn activate");
@@ -320,7 +320,7 @@
                           "</svg>";
 
                         var postElement2 =
-                            $("<div class='col-lg-6 col-xxl-4 mb-5'>" +
+                            $("<div class='col-lg-6 col-xxl-4 mb-5' data-daily-id='" + postList.dailyId + "'>" +
                                 "<div class='card bg-light border-0 h-100'>" +
                                     "<div class='card-body text-center p-4 p-lg-5 pt-0 pt-lg-0'>" +
                                         "<div class='feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4'>" +
@@ -342,8 +342,8 @@
                                         "</ul>" +
                                         "<br/>" +
                                         "<div style='display: flex; align-items: center;'>" +
-                                          svgIcon +
-                                          "<p class='fw-lighter text-start' style='margin: 0 0 0 8px;'>" + postList.dailyLikeCnt + "</p>" +
+                                          "<div class='like-icon'>" + svgIcon + "</div>" +
+                                          "<p class='fw-lighter text-start like-count' style='margin: 0 0 0 8px;'>" + postList.dailyLikeCnt + "</p>" +
                                         "</div>" +
                                     "</div>" +
                                 "</div>" +
@@ -381,6 +381,9 @@ function sendLikeRequest(dailyId) {
                   icon: 'success',
                   title: '좋아요를 등록 하였습니다.'
                 });
+
+                // TODO 여기서
+                updateLikeStatus(dailyId, true);
             }
 
             if (response.data == false) {
@@ -388,6 +391,9 @@ function sendLikeRequest(dailyId) {
                   icon: 'success',
                   title: '좋아요를 취소 하였습니다.'
                 });
+
+                // TODO 여기서
+                updateLikeStatus(dailyId, false);
             }
         },
         error: function(error) {
@@ -395,6 +401,36 @@ function sendLikeRequest(dailyId) {
 
         }
     });
+}
+
+
+// 좋아요 상태를 업데이트하는 함수
+function updateLikeStatus(dailyId, liked) {
+
+    var postElement = $("[data-daily-id='" + dailyId + "']");
+
+    console.log("postElement" + postElement);
+
+    var svgIcon = liked ?
+        "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + dailyId + "\")'>" +
+            "<path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314'/>" +
+        "</svg>" :
+        "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + dailyId + "\")'>" +
+            "<path d='m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15'/>" +
+        "</svg>";
+
+    postElement.find(".like-icon").html(svgIcon);
+
+    var likeCountElement = postElement.find(".like-count");
+
+    console.log("likeCountElement" + likeCountElement);
+
+    // currentCount = NaN
+    var currentCount = parseInt(likeCountElement.text());
+
+    console.log("currentCount" + currentCount);
+
+    likeCountElement.text(liked ? currentCount + 1 : currentCount - 1);
 }
 
 
