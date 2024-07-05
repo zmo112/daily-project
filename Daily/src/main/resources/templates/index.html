@@ -31,6 +31,17 @@
     #daily-form .input-group {
         margin-bottom: 20px; /* 각 입력 그룹 아래에 20px의 여백을 추가 */
     }
+
+    .gradient-custom-3 {
+    /* fallback for old browsers */
+    background: #84fab0;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+    }
 </style>
 <body>
 <!-- Responsive navbar-->
@@ -66,74 +77,76 @@
 </nav>
 
 <!-- Header-->
-<header class="py-5">
-    <div class="container px-lg-5">
-        <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
-            <div class="m-4 m-lg-5">
-                <h1 class="display-5 fw-bold">Welcome to Daily!</h1>
-                <p class="fs-4">날마다 반복되는 3감사 3회개로 여러분들의 하루에 대해서 기록하고 되돌아보세요! Daily는 여러분들이 더 발전할 수 있도록 도와주는 서비스입니다. 하루에 한번만 글을 작성할 수 있습니다!</p>
+<div class="gradient-custom-3">
+    <header class="py-5">
+        <div class="container px-lg-5">
+            <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+                <div class="m-4 m-lg-5">
+                    <h1 class="display-5 fw-bold">Welcome to Daily!</h1>
+                    <p class="fs-4">날마다 반복되는 3감사 3회개로 여러분들의 하루에 대해서 기록하고 되돌아보세요! Daily는 여러분들이 더 발전할 수 있도록 도와주는 서비스입니다. 하루에 한번만 글을 작성할 수 있습니다!</p>
 
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Daily 작성하기
-                </button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Daily 작성하기
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<!-- Page Content-->
-<section class="pt-4">
-    <div class="container px-lg-5">
-        <!-- Page Features-->
-        <div class="row gx-lg-5" id="postList">
+    <!-- Page Content-->
+    <section class="pt-4">
+        <div class="container px-lg-5">
+            <!-- Page Features-->
+            <div class="row gx-lg-5" id="postList">
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Daily 작성하기</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="daily-form">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="itIsPublic" name="itIsPublic" value="true" role="switch">
-                        <label class="form-check-label" for="itIsPublic">공개 여부</label>
-                    </div>
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text" id="input-thanks1">감사1</span>
-                        <textarea class="form-control" id="thanks1" name="thanks1" aria-label="thanks1" aria-describedby="inputGroup-sizing-lg"></textarea>
-                    </div>
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text" id="input-thanks2">감사2</span>
-                        <textarea class="form-control" id="thanks2" name="thanks2" aria-label="thanks2" aria-describedby="inputGroup-sizing-lg"></textarea>
-                    </div>
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text" id="input-thanks3">감사3</span>
-                        <textarea class="form-control" id="thanks3" name="thanks3" aria-label="thanks3" aria-describedby="inputGroup-sizing-lg"></textarea>
-                    </div>
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text" id="input-penitence1">회개1</span>
-                        <textarea class="form-control" id="penitence1" name="penitence1" aria-label="penitence1" aria-describedby="inputGroup-sizing-lg"></textarea>
-                    </div>
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text" id="input-penitence2">회개2</span>
-                        <textarea class="form-control" id="penitence2" name="penitence2" aria-label="penitence2" aria-describedby="inputGroup-sizing-lg"></textarea>
-                    </div>
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text" id="input-penitence3">회개2</span>
-                        <textarea class="form-control" id="penitence3" name="penitence3" aria-label="penitence3" aria-describedby="inputGroup-sizing-lg"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button id="modalCloseButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="submit-daily-form" type="button" class="btn btn-primary" onclick="ajax_send()" value="call">저장</button>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Daily 작성하기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="daily-form">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="itIsPublic" name="itIsPublic" value="true" role="switch">
+                            <label class="form-check-label" for="itIsPublic">공개 여부</label>
+                        </div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="input-thanks1">감사1</span>
+                            <textarea class="form-control" id="thanks1" name="thanks1" aria-label="thanks1" aria-describedby="inputGroup-sizing-lg"></textarea>
+                        </div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="input-thanks2">감사2</span>
+                            <textarea class="form-control" id="thanks2" name="thanks2" aria-label="thanks2" aria-describedby="inputGroup-sizing-lg"></textarea>
+                        </div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="input-thanks3">감사3</span>
+                            <textarea class="form-control" id="thanks3" name="thanks3" aria-label="thanks3" aria-describedby="inputGroup-sizing-lg"></textarea>
+                        </div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="input-penitence1">회개1</span>
+                            <textarea class="form-control" id="penitence1" name="penitence1" aria-label="penitence1" aria-describedby="inputGroup-sizing-lg"></textarea>
+                        </div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="input-penitence2">회개2</span>
+                            <textarea class="form-control" id="penitence2" name="penitence2" aria-label="penitence2" aria-describedby="inputGroup-sizing-lg"></textarea>
+                        </div>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="input-penitence3">회개2</span>
+                            <textarea class="form-control" id="penitence3" name="penitence3" aria-label="penitence3" aria-describedby="inputGroup-sizing-lg"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="modalCloseButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="submit-daily-form" type="button" class="btn btn-primary" onclick="ajax_send()" value="call">저장</button>
+                </div>
             </div>
         </div>
     </div>
@@ -283,6 +296,8 @@
             url: "dailies/" + startId + "/" + limit,
             success: function(result) {
 
+                console.log(result)
+
                 // 출력 데이터가 없다면 무한스크롤을 false(중지상태)로 설정
                 if (result.data.responseDTOS.length === 0) {
                     postScroll = false;
@@ -294,6 +309,15 @@
 
                     for (var i = 0; i < result.data.responseDTOS.length; i++) {
                         var postList = result.data.responseDTOS[i];
+
+                        // 좋아요에 따라 하트 이미지 변경 및 클릭 이벤트 핸들러 추가
+                        var svgIcon = postList.clickedLike ?
+                          "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + postList.dailyId + "\")'>" +
+                            "<path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314'/>" +
+                          "</svg>" :
+                          "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + postList.dailyId + "\")'>" +
+                            "<path d='m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15'/>" +
+                          "</svg>";
 
                         var postElement2 =
                             $("<div class='col-lg-6 col-xxl-4 mb-5'>" +
@@ -316,11 +340,9 @@
                                           "<li class='list-group-item'>" + postList.penitence2 + "</li>" +
                                           "<li class='list-group-item'>" + postList.penitence3 + "</li>" +
                                         "</ul>" +
-                                        "<br/>" + 
+                                        "<br/>" +
                                         "<div style='display: flex; align-items: center;'>" +
-                                          "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16'>" +
-                                            "<path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314'/>" +
-                                          "</svg>" +
+                                          svgIcon +
                                           "<p class='fw-lighter text-start' style='margin: 0 0 0 8px;'>" + postList.dailyLikeCnt + "</p>" +
                                         "</div>" +
                                     "</div>" +
@@ -345,6 +367,36 @@
             }
         });
     }
+
+
+// AJAX 요청을 보내는 함수
+function sendLikeRequest(dailyId) {
+
+    $.ajax({
+        url: "/daily-like/" + dailyId,
+        type: "POST",
+        success: function(response) {
+            if (response.data == true) {
+                Toast.fire({
+                  icon: 'success',
+                  title: '좋아요를 등록 하였습니다.'
+                });
+            }
+
+            if (response.data == false) {
+                Toast.fire({
+                  icon: 'success',
+                  title: '좋아요를 취소 하였습니다.'
+                });
+            }
+        },
+        error: function(error) {
+            console.error("Error sending like request", error);
+
+        }
+    });
+}
+
 
 </script>
 </html>

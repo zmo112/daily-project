@@ -25,8 +25,6 @@ public class DailyRestController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<DailyDTO.ResponseDTOs> getDailies(@AuthenticationPrincipal UserDetails userDetails, @PathVariable int offset, @PathVariable int limit){
 
-        log.info("get in the method");
-
         if (userDetails == null) {
             return ApiResponse.createSuccess(dailyService.getDailies("anonymous", offset, limit));
         }
@@ -63,9 +61,12 @@ public class DailyRestController {
     }
 
     // 좋아요 기능
-    @PostMapping("/dailyLike/{dailyId}")
+    @PostMapping("/daily-like/{dailyId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<Boolean> doDailyLike(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long dailyId){
-        return ApiResponse.createSuccess(dailyLikeService.doDailyLike(userDetails.getUsername(), dailyId));
+    public ApiResponse<?> doDailyLike(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long dailyId){
+
+        log.info("get in the method");
+
+        return ApiResponse.createSuccess(dailyLikeService.doDailyLike(userDetails, dailyId));
     }
 }

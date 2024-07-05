@@ -17,6 +17,7 @@ public class DailyLike extends Common {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ElementCollection
     @Builder.Default
     private List<String> members = new ArrayList<>(); // 해당 필드로 좋아요 수 체크
 

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +19,9 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, // @Secured 활성화
+        prePostEnabled = true // @PreAuthorized 활성화, @PostAuthroized 활성화
+)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -33,7 +37,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers("/login", "/signup", "/", "/error").permitAll() // 페이지
-                                .requestMatchers("/login/**", "/signup/**", "/logout").permitAll() // API
+                                .requestMatchers("/login/**", "/signup/**").permitAll() // API
                                 .requestMatchers("/**").permitAll() // CSS, JS 파일 허용
                                 .anyRequest().authenticated()
                 )
@@ -78,6 +82,14 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/") // 로그아웃 성공 후 targetUrl,
                 // logoutSuccessHandler 가 있다면 효과 없으므로 주석처리.
                 .deleteCookies("Authorization"); // 로그아웃 후 삭제할 쿠키 지정
+
+        // 인증되지 않은 사용자가 접근할 때 로그인 페이지로 리디렉션 설정
+        http
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling
+                                .authenticationEntryPoint((request, response, authException) ->
+                                        response.sendRedirect("/login"))
+                );
 
         return http.build();
     }

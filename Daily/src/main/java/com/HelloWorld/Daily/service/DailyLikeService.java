@@ -1,8 +1,11 @@
 package com.HelloWorld.Daily.service;
 
+import com.HelloWorld.Daily.common.MessageCode;
 import com.HelloWorld.Daily.entity.DailyLike;
+import com.HelloWorld.Daily.exception.customException.NotExistMemberException;
 import com.HelloWorld.Daily.repository.DailyLikeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +16,13 @@ public class DailyLikeService {
     private final DailyLikeRepository dailyLikeRepository;
 
     @Transactional
-    public boolean doDailyLike(String userName, Long dailyId) {
+    public boolean doDailyLike(UserDetails userDetails, Long dailyId) {
+
+        if (userDetails == null) {
+            throw new NotExistMemberException(MessageCode.DOES_NOT_EXIST_MEMBER.getMessage());
+        }
+
+        String userName = userDetails.getUsername();
 
         DailyLike dailyLike = dailyLikeRepository.selectDailyLikeByDaily(dailyId);
 
