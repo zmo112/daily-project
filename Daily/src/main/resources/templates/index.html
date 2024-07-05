@@ -182,8 +182,6 @@
     // Daily 작성 ajax
     function ajax_send(){
 
-        console.log("ajax_send fn activate");
-
         var dataSerialized = $("#daily-form");
 
         var data = $("#daily-form").serializeObject();
@@ -269,34 +267,24 @@
     });
 
     function scrollHandler() {
-        console.log("scorll이 감지 되었습니다.");
-
         // 스크롤이 화면 가장 아래에 닿으면 실행됨
         if (postScroll === true && $(window).scrollTop() + $(window).height() >= $(document).height() - 30) {
-            console.log("scorll이 맨 바닥에 위치합니다.");
 
             // 변경된 초기값으로 다시 목록이 출력됨
             postListDisplay(startId, limit);
 
             // 초기값은 limit 값을 더한 값으로 설정
             startId += limit;
-
-            console.log(startId);
-
         }
     }
 
     //게시글 목록 출력
     function postListDisplay(startId, limit) {
 
-        console.log("get in postListDisplay()");
-
         $.ajax({
             method: "GET",
             url: "dailies/" + startId + "/" + limit,
             success: function(result) {
-
-                console.log(result)
 
                 // 출력 데이터가 없다면 무한스크롤을 false(중지상태)로 설정
                 if (result.data.responseDTOS.length === 0) {
@@ -382,7 +370,6 @@ function sendLikeRequest(dailyId) {
                   title: '좋아요를 등록 하였습니다.'
                 });
 
-                // TODO 여기서
                 updateLikeStatus(dailyId, true);
             }
 
@@ -392,7 +379,6 @@ function sendLikeRequest(dailyId) {
                   title: '좋아요를 취소 하였습니다.'
                 });
 
-                // TODO 여기서
                 updateLikeStatus(dailyId, false);
             }
         },
@@ -409,8 +395,6 @@ function updateLikeStatus(dailyId, liked) {
 
     var postElement = $("[data-daily-id='" + dailyId + "']");
 
-    console.log("postElement" + postElement);
-
     var svgIcon = liked ?
         "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + dailyId + "\")'>" +
             "<path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314'/>" +
@@ -423,12 +407,7 @@ function updateLikeStatus(dailyId, liked) {
 
     var likeCountElement = postElement.find(".like-count");
 
-    console.log("likeCountElement" + likeCountElement);
-
-    // currentCount = NaN
     var currentCount = parseInt(likeCountElement.text());
-
-    console.log("currentCount" + currentCount);
 
     likeCountElement.text(liked ? currentCount + 1 : currentCount - 1);
 }
