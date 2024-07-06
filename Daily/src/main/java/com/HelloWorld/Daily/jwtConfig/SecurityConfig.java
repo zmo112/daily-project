@@ -83,14 +83,6 @@ public class SecurityConfig {
                 // logoutSuccessHandler 가 있다면 효과 없으므로 주석처리.
                 .deleteCookies("Authorization"); // 로그아웃 후 삭제할 쿠키 지정
 
-        // 인증되지 않은 사용자가 접근할 때 로그인 페이지로 리디렉션 설정
-        http
-                .exceptionHandling(exceptionHandling ->
-                        exceptionHandling
-                                .authenticationEntryPoint((request, response, authException) ->
-                                        response.sendRedirect("/login"))
-                );
-
         return http.build();
     }
 

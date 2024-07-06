@@ -55,7 +55,7 @@ public class DailyRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<?> postDailies(@AuthenticationPrincipal UserDetails userDetails, @RequestBody DailyDTO.RequestDTO requestDTO){
 
-        dailyService.saveDaily(userDetails.getUsername(), requestDTO);
+        dailyService.saveDaily(userDetails, requestDTO);
 
         return ApiResponse.createSuccessWithNoContent(); // 공통 API를 반환하기 위한 ApiResponse 객체 사용
     }

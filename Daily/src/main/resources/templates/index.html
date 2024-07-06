@@ -86,7 +86,7 @@
                     <p class="fs-4">날마다 반복되는 3감사 3회개로 여러분들의 하루에 대해서 기록하고 되돌아보세요! Daily는 여러분들이 더 발전할 수 있도록 도와주는 서비스입니다. 하루에 한번만 글을 작성할 수 있습니다!</p>
 
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Daily 작성하기
                     </button>
                 </div>
@@ -109,7 +109,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Daily 작성하기</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="daily-form">
@@ -144,8 +143,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button id="modalCloseButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button id="submit-daily-form" type="button" class="btn btn-primary" onclick="ajax_send()" value="call">저장</button>
+                    <button id="modalCloseButton" type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                    <button id="submit-daily-form" type="button" class="btn btn-outline-success" onclick="ajax_send()" value="call">저장</button>
                 </div>
             </div>
         </div>
@@ -203,23 +202,29 @@
                   title: '정상적으로 등록하였습니다.'
                 });
 
-                // 해당 방식은 부드러운 방법은 아닌 듯 하다 추후 변경하기
-                setTimeout(function() {
-                    location.reload();
-                }, 3000);
+                $("#postList").empty();
+                postListDisplay(0, 5);
             },
 
             error : function(request, status, error){
+
+                if (request.status == 401) {
+                    Toast.fire({
+                      icon: 'error',
+                      title: '로그인 후 글을 작성해주세요.'
+                    });
+                }
+
+                if (request.status == 400) {
+                    Toast.fire({
+                      icon: 'error',
+                      title: '이미 오늘 작성된 글이 있습니다.'
+                    });
+                }
+
                 $("#daily-form")[0].reset();
 
                 $('#staticBackdrop').modal('hide');
-
-                Toast.fire({
-                  icon: 'error',
-                  title: '이미 오늘 작성된 글이 있습니다.'
-                });
-
-                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             },
         });
 
@@ -309,24 +314,24 @@
 
                         var postElement2 =
                             $("<div class='col-lg-6 col-xxl-4 mb-5' data-daily-id='" + postList.dailyId + "'>" +
-                                "<div class='card bg-light border-0 h-100'>" +
-                                    "<div class='card-body text-center p-4 p-lg-5 pt-0 pt-lg-0'>" +
-                                        "<div class='feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4'>" +
+                                "<div class='card border-success border-0 h-100'>" +
+                                    "<div class='card-body p-4 p-lg-5 pt-0 pt-lg-0'>" +
+                                        "<div class='feature bg-success bg-gradient text-white rounded-3 mb-4 mt-n4'>" +
                                             "<i class='bi bi-collection'></i>" +
                                         "</div>" +
-                                        "<h2 class='fs-4 fw-bold'>" + postList.author + "</h2>" +
-                                        "<p class='mb-0'>감사</p>" +
-                                        "<ul class='list-group'>" +
-                                          "<li class='list-group-item'>" + postList.thanks1 + "</li>" +
-                                          "<li class='list-group-item'>" + postList.thanks2 + "</li>" +
-                                          "<li class='list-group-item'>" + postList.thanks3 + "</li>" +
+                                        "<h2 class='fs-3 fw-normal fst-italic text-center'>" + postList.author + "</h2>" +
+                                        "<p class='fs-5 fw-normal mb-0'>감사</p>" +
+                                        "<ul class='list-group list-group-flush'>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.thanks1 + "</p>" + "</li>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.thanks2 + "</p>" + "</li>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.thanks3 + "</p>" + "</li>" +
                                         "</ul>" +
                                         "<br />" +
-                                        "<p class='mb-0'>회개</p>" +
-                                        "<ul class='list-group'>" +
-                                          "<li class='list-group-item'>" + postList.penitence1 + "</li>" +
-                                          "<li class='list-group-item'>" + postList.penitence2 + "</li>" +
-                                          "<li class='list-group-item'>" + postList.penitence3 + "</li>" +
+                                        "<p class='fs-5 fw-normal mb-0'>회개</p>" +
+                                        "<ul class='list-group list-group-flush'>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.penitence1 + "</p>" + "</li>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.penitence2 + "</p>" + "</li>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.penitence3 + "</p>" + "</li>" +
                                         "</ul>" +
                                         "<br/>" +
                                         "<div style='display: flex; align-items: center;'>" +
@@ -357,60 +362,66 @@
     }
 
 
-// AJAX 요청을 보내는 함수
-function sendLikeRequest(dailyId) {
+    // 좋아요 등록 및 취소를 위한 Ajax
+    function sendLikeRequest(dailyId) {
 
-    $.ajax({
-        url: "/daily-like/" + dailyId,
-        type: "POST",
-        success: function(response) {
-            if (response.data == true) {
+        $.ajax({
+            url: "/daily-like/" + dailyId,
+            type: "POST",
+            success: function(response) {
+
+                console.log(response);
+
+                if (response.data == true) {
+                    Toast.fire({
+                      icon: 'success',
+                      title: '좋아요를 등록 하였습니다.'
+                    });
+
+                    updateLikeStatus(dailyId, true);
+                }
+
+                if (response.data == false) {
+                    Toast.fire({
+                      icon: 'success',
+                      title: '좋아요를 취소 하였습니다.'
+                    });
+
+                    updateLikeStatus(dailyId, false);
+                }
+            },
+            error : function(request, status, error){
                 Toast.fire({
-                  icon: 'success',
-                  title: '좋아요를 등록 하였습니다.'
+                    icon: 'error',
+                    title: '로그인 후 이용 해주세요.'
                 });
 
-                updateLikeStatus(dailyId, true);
             }
-
-            if (response.data == false) {
-                Toast.fire({
-                  icon: 'success',
-                  title: '좋아요를 취소 하였습니다.'
-                });
-
-                updateLikeStatus(dailyId, false);
-            }
-        },
-        error: function(error) {
-            console.error("Error sending like request", error);
-
-        }
-    });
-}
+        });
+    }
 
 
-// 좋아요 상태를 업데이트하는 함수
-function updateLikeStatus(dailyId, liked) {
+    // 좋아요 상태를 업데이트하는 함수
+    function updateLikeStatus(dailyId, liked) {
 
-    var postElement = $("[data-daily-id='" + dailyId + "']");
+        var postElement = $("[data-daily-id='" + dailyId + "']");
 
-    var svgIcon = liked ?
-        "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + dailyId + "\")'>" +
-            "<path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314'/>" +
-        "</svg>" :
-        "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + dailyId + "\")'>" +
-            "<path d='m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15'/>" +
-        "</svg>";
+        var svgIcon = liked ?
+            "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + dailyId + "\")'>" +
+                "<path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314'/>" +
+            "</svg>" :
+            "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + dailyId + "\")'>" +
+                "<path d='m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15'/>" +
+            "</svg>";
 
-    postElement.find(".like-icon").html(svgIcon);
+        postElement.find(".like-icon").html(svgIcon);
 
-    var likeCountElement = postElement.find(".like-count");
+        var likeCountElement = postElement.find(".like-count");
 
-    var currentCount = parseInt(likeCountElement.text());
+        var currentCount = parseInt(likeCountElement.text());
 
-    likeCountElement.text(liked ? currentCount + 1 : currentCount - 1);
-}
+        likeCountElement.text(liked ? currentCount + 1 : currentCount - 1);
+    }
 
 
 </script>

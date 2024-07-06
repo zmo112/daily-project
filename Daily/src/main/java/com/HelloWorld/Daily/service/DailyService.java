@@ -6,6 +6,7 @@ import com.HelloWorld.Daily.entity.Daily;
 import com.HelloWorld.Daily.entity.DailyContent;
 import com.HelloWorld.Daily.entity.DailyLike;
 import com.HelloWorld.Daily.entity.Member;
+import com.HelloWorld.Daily.exception.customException.NotExistMemberException;
 import com.HelloWorld.Daily.exception.customException.WrittenDailyInADayException;
 import com.HelloWorld.Daily.repository.DailyContentRepository;
 import com.HelloWorld.Daily.repository.DailyLikeRepository;
@@ -13,6 +14,7 @@ import com.HelloWorld.Daily.repository.DailyRepository;
 import com.HelloWorld.Daily.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,14 +58,20 @@ public class DailyService {
     }
 
     @Transactional
-    public void saveDaily(String memberName, DailyDTO.RequestDTO requestDTO){
+    public void saveDaily(UserDetails userDetails, DailyDTO.RequestDTO requestDTO){
+
+        if (userDetails == null) {
+            throw new NotExistMemberException(MessageCode.DOES_NOT_EXIST_MEMBER.getMessage());
+        }
+
+        String userName = userDetails.getUsername();
 
         // 해당 유저가 하루 내로 작성한 글이 있는지 확인 -> Exception 반환
-        if (dailyRepository.findDailyInDay(memberName).isPresent()){
+        if (dailyRepository.findDailyInDay(userName).isPresent()){
             throw new WrittenDailyInADayException(MessageCode.WRITTEN_DAILY_IN_A_DAY.getMessage());
         }
 
-        Optional<Member> member = memberRepository.findByUserName(memberName);
+        Optional<Member> member = memberRepository.findByUserName(userName);
 
         member.ifPresent(value -> saveEntityAboutDaily(value, requestDTO));
 
