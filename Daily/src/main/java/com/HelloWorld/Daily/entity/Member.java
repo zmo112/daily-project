@@ -30,6 +30,10 @@ public class Member extends Common implements UserDetails {
 
     private String nickName;
 
+    @OneToOne
+    @JoinColumn(name = "level_id")
+    private Level level;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
@@ -48,6 +52,10 @@ public class Member extends Common implements UserDetails {
 
     public void addRole(String role){
         this.roles.add(role);
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
 

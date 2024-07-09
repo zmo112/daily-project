@@ -7,7 +7,8 @@
     <meta name="author" content="" />
     <title>Daily Project</title>
     <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
     <!-- Alert Library -->
@@ -303,6 +304,34 @@
                     for (var i = 0; i < result.data.responseDTOS.length; i++) {
                         var postList = result.data.responseDTOS[i];
 
+                        var levelIcon;
+
+                        // 글쓴이의 레벨에 따른 이미지 변경
+                        switch(postList.authorLevel) {
+                            case 1:
+                                // Author Level 1에 대한 처리
+                                levelIcon = "<i class='bi bi-1-square-fill'></i>"
+                                break;
+                            case 2:
+                                // Author Level 2에 대한 처리
+                                levelIcon = "<i class='bi bi-2-square-fill'></i>"
+                                break;
+                            case 3:
+                                // Author Level 3에 대한 처리
+                                levelIcon = "<i class='bi bi-3-square-fill'></i>"
+                                break;
+                            case 4:
+                                // Author Level 4에 대한 처리
+                                levelIcon = "<i class='bi bi-4-square-fill'></i>"
+                                break;
+                            default:
+                                // 기타 레벨에 대한 처리
+                                levelIcon = "<i class='bi bi-c-square-fill'></i>"
+                                break;
+                        }
+
+                        console.log(levelIcon);
+
                         // 좋아요에 따라 하트 이미지 변경 및 클릭 이벤트 핸들러 추가
                         var svgIcon = postList.clickedLike ?
                           "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + postList.dailyId + "\")'>" +
@@ -317,7 +346,7 @@
                                 "<div class='card border-success border-0 h-100'>" +
                                     "<div class='card-body p-4 p-lg-5 pt-0 pt-lg-0'>" +
                                         "<div class='feature bg-success bg-gradient text-white rounded-3 mb-4 mt-n4'>" +
-                                            "<i class='bi bi-collection'></i>" +
+                                            levelIcon +
                                         "</div>" +
                                         "<h2 class='fs-3 fw-normal fst-italic text-center'>" + postList.author + "</h2>" +
                                         "<p class='fs-5 fw-normal mb-0'>감사</p>" +

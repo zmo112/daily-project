@@ -11,6 +11,12 @@ import java.util.Optional;
 
 public interface DailyRepository extends JpaRepository<Daily, Long> {
 
+    @Query("select d " +
+            "from Daily d " +
+            "join fetch d.member " +
+            "where d.id = :id")
+    Optional<Daily> findById(@Param("id") Long id);
+
     // 하루 내로 작성된 Daily가 있는지 확인
     @Query(value = "SELECT d " +
             "FROM Daily d " +

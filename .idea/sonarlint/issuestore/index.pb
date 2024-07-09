@@ -67,3 +67,15 @@ LDaily/src/main/java/com/HelloWorld/Daily/exception/RestExceptionHandler.java,a
 _Daily/src/main/java/com/HelloWorld/Daily/exception/customException/NotExistMemberException.java,b/b/bb264d2282ec6713f3bc46d50df4211c1b2a90c3
 “
 cDaily/src/main/java/com/HelloWorld/Daily/exception/customException/WrittenDailyInADayException.java,0/4/04cb7ae5e7a4aae8f8b9dc113f140e966bda2637
+j
+:Daily/src/main/java/com/HelloWorld/Daily/entity/Level.java,f/3/f367fe976ec45e8dbcfbb097466eea1baa305e9d
+x
+HDaily/src/main/java/com/HelloWorld/Daily/repository/LevelRepository.java,1/6/16733b77807477641b4211e24bb411955d19ac45
+r
+BDaily/src/main/java/com/HelloWorld/Daily/service/LevelService.java,b/0/b01f37aab31ef84923c0a489c340337bb10d8a75
+Ž
+^Daily/src/main/java/com/HelloWorld/Daily/exception/customException/NotExistDailtException.java,8/6/863353040dcd933a15b04411fbfa141b5a78c351
+Ž
+^Daily/src/main/java/com/HelloWorld/Daily/exception/customException/NotExistDailyException.java,b/9/b9bf1204080ee8d1d3738dba45572602ec2b939c
+s
+CDaily/src/main/java/com/HelloWorld/Daily/exception/MessageCode.java,c/3/c39728777970d8e7d6bc89edc0fe604c08407503

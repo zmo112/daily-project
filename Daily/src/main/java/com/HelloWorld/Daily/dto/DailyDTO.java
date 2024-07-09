@@ -1,8 +1,6 @@
 package com.HelloWorld.Daily.dto;
 
-import com.HelloWorld.Daily.entity.Daily;
-import com.HelloWorld.Daily.entity.DailyContent;
-import com.HelloWorld.Daily.entity.DailyLike;
+import com.HelloWorld.Daily.entity.*;
 import lombok.*;
 
 import java.util.List;
@@ -57,6 +55,8 @@ public class DailyDTO {
 
         private int dailyLikeCnt;
 
+        private Long authorLevel;
+
         private boolean isClickedLike;
 
         private boolean isPublic;
@@ -73,12 +73,13 @@ public class DailyDTO {
 
         private String penitence3;
 
-        public static ResponseDTO of(Daily daily, DailyLike dailyLike, DailyContent dailyContent, String userName){
+        public static ResponseDTO of(Daily daily, DailyLike dailyLike, DailyContent dailyContent, String memberName){
             return ResponseDTO.builder()
                     .author(daily.getMember().getNickName())
                     .dailyId(daily.getId())
                     .dailyLikeCnt(dailyLike.getUsersCount())
-                    .isClickedLike(dailyLike.isClickedLike(userName))
+                    .authorLevel(Level.calculateLevel(daily.getMember().getLevel().getPoint()))
+                    .isClickedLike(dailyLike.isClickedLike(memberName))
                     .isPublic(daily.isPublic())
                     .thanks1(dailyContent.getThanks1())
                     .thanks2(dailyContent.getThanks2())

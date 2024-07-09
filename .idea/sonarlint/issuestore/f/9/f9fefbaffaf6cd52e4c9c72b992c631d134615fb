@@ -1,4 +1,4 @@
 
-œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŒÖĞÂ8¤—’ş1J$8351c1a5-4c4c-4f2c-a16b-df7d3cf308f5
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŒÖĞÂ8åñ“­‰2J$7c89e69f-2a59-4b1d-82e5-52c724ec56e8
 •
-java:S6204:"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8‡é¿’ş1J$5b6fca4f-2b51-4dd4-bfa2-da85951264dd
+java:S6204B"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ïñ“­‰2J$462a50bc-020a-4aeb-8f0b-9e89b4917b1e

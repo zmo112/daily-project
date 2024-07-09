@@ -1,17 +1,11 @@
 package com.HelloWorld.Daily.service;
 
-import com.HelloWorld.Daily.common.MessageCode;
+import com.HelloWorld.Daily.exception.MessageCode;
 import com.HelloWorld.Daily.dto.DailyDTO;
-import com.HelloWorld.Daily.entity.Daily;
-import com.HelloWorld.Daily.entity.DailyContent;
-import com.HelloWorld.Daily.entity.DailyLike;
-import com.HelloWorld.Daily.entity.Member;
+import com.HelloWorld.Daily.entity.*;
 import com.HelloWorld.Daily.exception.customException.NotExistMemberException;
 import com.HelloWorld.Daily.exception.customException.WrittenDailyInADayException;
-import com.HelloWorld.Daily.repository.DailyContentRepository;
-import com.HelloWorld.Daily.repository.DailyLikeRepository;
-import com.HelloWorld.Daily.repository.DailyRepository;
-import com.HelloWorld.Daily.repository.MemberRepository;
+import com.HelloWorld.Daily.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,11 +26,14 @@ public class DailyService {
 
     private final DailyContentRepository dailyContentRepository;
 
+    private final LevelRepository levelRepository;
+
     @Transactional(readOnly = true)
     public DailyDTO.ResponseDTOs getDailies(String memberName, int offset, int limit){
 
         List<Daily> dailies = getDailyList(offset, limit);
 
+        // TODO 아니야 글쓴이 Level로 들어가야 해
         return DailyDTO.ResponseDTOs.of(
                 dailies.stream().map(
                 daily -> getResponseDTO(daily, memberName)
@@ -71,9 +67,15 @@ public class DailyService {
             throw new WrittenDailyInADayException(MessageCode.WRITTEN_DAILY_IN_A_DAY.getMessage());
         }
 
-        Optional<Member> member = memberRepository.findByUserName(userName);
+        // 글쓴이
+        Member member = memberRepository.findByUserName(userName).get();
 
-        member.ifPresent(value -> saveEntityAboutDaily(value, requestDTO));
+        // Point 추가
+        Level level = member.getLevel();
+
+        level.addPointsWhenWriteDaily();
+
+        saveEntityAboutDaily(member, requestDTO);
 
     }
 
@@ -83,6 +85,7 @@ public class DailyService {
         dailyLikeRepository.save(DailyLike.of(daily));
         dailyContentRepository.save(DailyContent.of(daily, requestDTO));
     }
+
 
     // ResponseDTO 조회 및 객체화
     private DailyDTO.ResponseDTO getResponseDTO(Daily daily, String memberName){

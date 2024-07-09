@@ -10,19 +10,31 @@ truncate table daily_like;
 SET REFERENTIAL_INTEGRITY TRUE;
 -- 모든 제약 조건 활성화
 
+-- Level
+INSERT INTO level (point) VALUES (3000);
+
+INSERT INTO level (point) VALUES (2000);
+
+INSERT INTO level (point) VALUES (1000);
+
+INSERT INTO level (point) VALUES (10000);
+
+
 
 -- Member
-INSERT INTO member (nick_name, password, user_name) VALUES ('반갑티비', 1234, 'kevin');
+INSERT INTO member (nick_name, password, user_name, level_id) VALUES ('반갑티비', 1234, 'kevin', 1);
 INSERT INTO member_roles (member_id,roles) VALUES (1, 'USER');
 
-INSERT INTO member (nick_name, password, user_name) VALUES ('안녕티비', 1234, 'demo');
+INSERT INTO member (nick_name, password, user_name, level_id) VALUES ('안녕티비', 1234, 'demo', 2);
 INSERT INTO member_roles (member_id,roles) VALUES (2, 'USER');
 
-INSERT INTO member (nick_name, password, user_name) VALUES ('어쩔티비', 1234, 'yardyard');
+INSERT INTO member (nick_name, password, user_name, level_id) VALUES ('어쩔티비', 1234, 'yardyard', 3);
 INSERT INTO member_roles (member_id,roles) VALUES (3, 'USER');
 
-INSERT INTO member (nick_name, password, user_name) VALUES ('어쩔티비', 1234, 'hello');
+INSERT INTO member (nick_name, password, user_name, level_id) VALUES ('어쩔티비', 1234, 'hello', 4);
 INSERT INTO member_roles (member_id,roles) VALUES (4, 'USER');
+
+
 
 
 -- Daily
