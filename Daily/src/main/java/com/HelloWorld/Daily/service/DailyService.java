@@ -33,7 +33,6 @@ public class DailyService {
 
         List<Daily> dailies = getDailyList(offset, limit);
 
-        // TODO 아니야 글쓴이 Level로 들어가야 해
         return DailyDTO.ResponseDTOs.of(
                 dailies.stream().map(
                 daily -> getResponseDTO(daily, memberName)
@@ -63,9 +62,8 @@ public class DailyService {
         String userName = userDetails.getUsername();
 
         // 해당 유저가 하루 내로 작성한 글이 있는지 확인 -> Exception 반환
-        if (dailyRepository.findDailyInDay(userName).isPresent()){
-            throw new WrittenDailyInADayException(MessageCode.WRITTEN_DAILY_IN_A_DAY.getMessage());
-        }
+        Daily daily = dailyRepository.findDailyInDay(userName)
+                .orElseThrow(() -> new WrittenDailyInADayException(MessageCode.WRITTEN_DAILY_IN_A_DAY.getMessage()));
 
         // 글쓴이
         Member member = memberRepository.findByUserName(userName).get();

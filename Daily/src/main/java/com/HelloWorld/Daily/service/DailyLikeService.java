@@ -32,17 +32,15 @@ public class DailyLikeService {
             throw new NotExistMemberException(MessageCode.DOES_NOT_EXIST_MEMBER.getMessage());
         }
 
-        Optional<Daily> daily = dailyRepository.findById(dailyId);
+        Daily daily = dailyRepository.findById(dailyId)
+                .orElseThrow(() -> new NotExistMemberException(MessageCode.DOES_NOT_EXIST_MEMBER.getMessage()));
 
-        if (daily.isEmpty()) {
-            throw new NotExistMemberException(MessageCode.DOES_NOT_EXIST_MEMBER.getMessage());
-        }
 
         // 현재 인가 유저 이름
         String userName = userDetails.getUsername();
 
         // Daily 글쓴이 유저 이름
-        Level level = memberRepository.findByUserName(daily.get().getMember().getUsername()).get().getLevel();
+        Level level = memberRepository.findByUserName(daily.getMember().getUsername()).get().getLevel();
 
         DailyLike dailyLike = dailyLikeRepository.selectDailyLikeByDaily(dailyId);
 
