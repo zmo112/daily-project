@@ -7,6 +7,7 @@ import com.HelloWorld.Daily.exception.customException.WrittenDailyInADayExceptio
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -27,6 +28,11 @@ public class RestExceptionHandler {
     @ExceptionHandler(WrittenDailyInADayException.class)
     public ResponseEntity<ApiResponse<?>> handleWrittenDailyInADayException(RuntimeException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.createError(exception.getMessage()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<?>> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+        return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(ApiResponse.createFail(exception.getBindingResult()));
     }
 
 }

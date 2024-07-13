@@ -1,7 +1,9 @@
 package com.HelloWorld.Daily.dto;
 
 import com.HelloWorld.Daily.entity.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
@@ -15,16 +17,29 @@ public class DailyDTO {
 
         private boolean itIsPublic;
 
+        // JAVA에서는 어노테이션 인자에 메서드 호출을 사용할 수 없다.
+        @NotBlank(message = "최소 1글자 이상을 작성해야 합니다.")
+        @Length(min = 2, max = 1000, message = "최소 1글자, 최대 1000 글자 이하로 작성하여야 합니다.")
         private String thanks1;
 
+        @NotBlank(message = "최소 1글자 이상을 작성해야 합니다.")
+        @Length(min = 2, max = 1000, message = "최소 1글자, 최대 1000 글자 이하로 작성하여야 합니다.")
         private String thanks2;
 
+        @NotBlank(message = "최소 1글자 이상을 작성해야 합니다.")
+        @Length(min = 2, max = 1000, message = "최소 1글자, 최대 1000 글자 이하로 작성하여야 합니다.")
         private String thanks3;
 
+        @NotBlank(message = "최소 1글자 이상을 작성해야 합니다.")
+        @Length(min = 2, max = 1000, message = "최소 1글자, 최대 1000 글자 이하로 작성하여야 합니다.")
         private String penitence1;
 
+        @NotBlank(message = "최소 1글자 이상을 작성해야 합니다.")
+        @Length(min = 2, max = 1000, message = "최소 1글자, 최대 1000 글자 이하로 작성하여야 합니다.")
         private String penitence2;
 
+        @NotBlank(message = "최소 1글자 이상을 작성해야 합니다.")
+        @Length(min = 2, max = 1000, message = "최소 1글자, 최대 1000 글자 이하로 작성하여야 합니다.")
         private String penitence3;
 
     }

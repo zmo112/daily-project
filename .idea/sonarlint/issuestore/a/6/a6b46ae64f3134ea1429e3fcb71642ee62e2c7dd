@@ -1,8 +1,10 @@
 
-v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÀÌª·8ôùğ¯‰2
-H
-java:S1452"&Remove usage of generic wildcard type.(­Ïåéşÿÿÿÿ8úùğ¯‰2
-C
-java:S1452"&Remove usage of generic wildcard type.(úìÍõ8ûùğ¯‰2
-H
-java:S1452"&Remove usage of generic wildcard type.(±ƒÃïÿÿÿÿÿ8ûùğ¯‰2
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÀÌª·8ôùğ¯‰2J$574b0448-b118-4028-a564-0a6413b9d59b
+n
+java:S1452"&Remove usage of generic wildcard type.(­Ïåéşÿÿÿÿ8úùğ¯‰2J$a0700ea6-1b73-48dd-a596-27df7dbb5584
+i
+java:S1452"&Remove usage of generic wildcard type.(úìÍõ8ûùğ¯‰2J$9a80ac26-8863-496a-b1d0-57051227312c
+n
+java:S1452"&Remove usage of generic wildcard type.(±ƒÃïÿÿÿÿÿ8ûùğ¯‰2J$0dffc8ef-2be8-4624-8b63-b40b90e48515
+n
+java:S1452""&Remove usage of generic wildcard type.(áßÄ£ûÿÿÿÿ8–‹°ĞŠ2J$d53dce52-8017-4a9d-bf96-144c28fcce0b

@@ -207,19 +207,32 @@
                 postListDisplay(0, 5);
             },
 
-            error : function(request, status, error){
+            error : function(response, status, error){
 
-                if (request.status == 401) {
+                if (response.status == 401) {
                     Toast.fire({
                       icon: 'error',
                       title: '로그인 후 글을 작성해주세요.'
                     });
                 }
 
-                if (request.status == 400) {
+                if (response.status == 400) {
                     Toast.fire({
                       icon: 'error',
                       title: '이미 오늘 작성된 글이 있습니다.'
+                    });
+                }
+
+                if (response.status == 412) {
+                    // 중복된 값을 제거하기 위한 Set 사용
+                    const uniqueMessages = new Set(Object.values(response.responseJSON.data));
+
+                    // Toast 제목에 작성
+                    const toastTitle = Array.from(uniqueMessages).join(', ');
+
+                    Toast.fire({
+                      icon: 'error',
+                      title: toastTitle
                     });
                 }
 
@@ -295,7 +308,6 @@
                 // 출력 데이터가 없다면 무한스크롤을 false(중지상태)로 설정
                 if (result.data.responseDTOS.length === 0) {
                     postScroll = false;
-                    console.log("더 이상 데이터가 없다요....ㅠ");
                 }
 
                 // 데이터가 있으면 목록 출력
@@ -329,8 +341,6 @@
                                 levelIcon = "<i class='bi bi-c-square-fill'></i>"
                                 break;
                         }
-
-                        console.log(levelIcon);
 
                         // 좋아요에 따라 하트 이미지 변경 및 클릭 이벤트 핸들러 추가
                         var svgIcon = postList.clickedLike ?

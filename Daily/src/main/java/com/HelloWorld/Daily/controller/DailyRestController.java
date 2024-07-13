@@ -4,7 +4,9 @@ import com.HelloWorld.Daily.common.ApiResponse;
 import com.HelloWorld.Daily.dto.DailyDTO;
 import com.HelloWorld.Daily.service.DailyLikeService;
 import com.HelloWorld.Daily.service.DailyService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -53,7 +55,7 @@ public class DailyRestController {
     // Daily 생성
     @PostMapping("/daily")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<?> postDailies(@AuthenticationPrincipal UserDetails userDetails, @RequestBody DailyDTO.RequestDTO requestDTO){
+    public ApiResponse<?> postDailies(@AuthenticationPrincipal UserDetails userDetails, @Valid @RequestBody DailyDTO.RequestDTO requestDTO){
 
         dailyService.saveDaily(userDetails, requestDTO);
 

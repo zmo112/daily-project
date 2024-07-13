@@ -30,7 +30,7 @@ public class MockUtils {
     public static DailyDTO.RequestDTO getDailyRequestDTO(Member member){
 
         return DailyDTO.RequestDTO.builder()
-                .isPublic(true)
+                .itIsPublic(true)
                 .thanks1("감사1")
                 .thanks2("감사2")
                 .thanks3("감사3")
@@ -45,7 +45,7 @@ public class MockUtils {
     public static Daily getPublicDaily(Member member){
 
         DailyDTO.RequestDTO dailyRequestDTO = DailyDTO.RequestDTO.builder()
-                .isPublic(true)
+                .itIsPublic(true)
                 .thanks1("감사1")
                 .thanks2("감사2")
                 .thanks3("감사3")
@@ -61,7 +61,7 @@ public class MockUtils {
     public static Daily getPrivateDaily(Member member){
 
         DailyDTO.RequestDTO privateDailyRequestDTO = DailyDTO.RequestDTO.builder()
-                .isPublic(false)
+                .itIsPublic(false)
                 .thanks1("감사1")
                 .thanks2("감사2")
                 .thanks3("감사3")
@@ -83,7 +83,7 @@ public class MockUtils {
     public static DailyContent getDailyContent(){
 
         DailyDTO.RequestDTO dailyRequestDTO = DailyDTO.RequestDTO.builder()
-                .isPublic(true)
+                .itIsPublic(true)
                 .thanks1("감사1")
                 .thanks2("감사2")
                 .thanks3("감사3")

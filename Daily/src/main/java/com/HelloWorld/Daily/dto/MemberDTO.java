@@ -1,7 +1,9 @@
 package com.HelloWorld.Daily.dto;
 
 import com.HelloWorld.Daily.entity.Member;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 public class MemberDTO {
@@ -10,10 +12,14 @@ public class MemberDTO {
     @Builder
     public static class RequestDTO {
 
+        @Length(min = 6, max = 15, message = "ID는 최소 6글자, 최대 15 글자 이하로 작성하여야 합니다.")
         private String userName;
 
+        @Length(min = 6, max = 20, message = "비밀번호는 6자 이상 20자 이하의 길이여야 합니다.")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d).+$", message = "비밀번호는 문자와 숫자가 혼용되어야 합니다.")
         private String userPassword;
 
+        @Length(min = 6, max = 15, message = "닉네임은 최소 6글자, 최대 15 글자 이하로 작성하여야 합니다.")
         private String userNickname;
 
     }

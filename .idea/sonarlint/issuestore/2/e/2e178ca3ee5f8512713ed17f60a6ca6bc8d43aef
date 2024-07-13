@@ -1,10 +1,12 @@
 
-¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ıÜÉüÿÿÿÿ8ÑåÃˆ2J$8a8327c6-f0dd-4b29-939a-725269711da1
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ıÜÉüÿÿÿÿ8ÑåÃˆ2J$56e2fcd9-7689-4547-a858-73530a967f29
 É
-java:S1186%"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Çüœüÿÿÿÿ8ÚåÃˆ2J$d41dc5aa-d830-4baf-9687-7ac5ffd690ae
+java:S1186'"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Çüœüÿÿÿÿ8ÚåÃˆ2J$45ee02eb-07f9-4cdc-b42e-6b813bdeedc6
 u
-java:S1135#"2Complete the task associated to this TODO comment.(‹Ù¤8ŞåÃˆ2J$132a7539-4084-4b0e-aa3b-f13786f6850a
+java:S1135%"2Complete the task associated to this TODO comment.(‹Ù¤8ŞåÃˆ2J$d035410c-9deb-4ca4-9879-bad3f7358df2
+h
+java:S1452:"&Remove usage of generic wildcard type.(ø €t8ßåÃˆ2J$d3889c77-44a6-4f0f-89da-c6d7a00095b9
 n
-java:S14528"&Remove usage of generic wildcard type.(ŒŸ‘Âûÿÿÿÿ8ßåÃˆ2J$f1175394-b5db-4234-81f7-507af73fa685
-n
-java:S1452B"&Remove usage of generic wildcard type.(ÙúÚıÿÿÿÿ8¯¨ˆ2J$693ebc8c-7e31-4a3d-ad8d-213d4aec7a74
+java:S1452D"&Remove usage of generic wildcard type.(ÙúÚıÿÿÿÿ8¯¨ˆ2J$99590dd7-26d4-43e3-9e63-f2a1f5621da0
+l
+java:S1128	")Remove this unused import 'lombok.Value'.(ß­ÅŸ8åÁ©ĞŠ2J$0714ff29-000f-47db-84fe-ccb33aed6781
