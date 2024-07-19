@@ -6,7 +6,6 @@ import com.HelloWorld.Daily.service.DailyLikeService;
 import com.HelloWorld.Daily.service.DailyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,12 +31,6 @@ public class DailyRestController {
         }
 
         return ApiResponse.createSuccess(dailyService.getDailies(userDetails.getUsername(), offset, limit));
-    }
-
-    // TODO : 클릭시 보여지는 디테일 페이지
-    @GetMapping("/daily")
-    public void getDailies(){
-
     }
 
     // 홈에서 띄워지는 Daily

@@ -62,11 +62,13 @@ public class DailyService {
         String userName = userDetails.getUsername();
 
         // 해당 유저가 하루 내로 작성한 글이 있는지 확인 -> Exception 반환
-        Daily daily = dailyRepository.findDailyInDay(userName)
-                .orElseThrow(() -> new WrittenDailyInADayException(MessageCode.WRITTEN_DAILY_IN_A_DAY.getMessage()));
+        if (dailyRepository.findDailyInDay(userName).isPresent()) {
+            throw new WrittenDailyInADayException(MessageCode.WRITTEN_DAILY_IN_A_DAY.getMessage());
+        }
 
         // 글쓴이
-        Member member = memberRepository.findByUserName(userName).get();
+        Member member = memberRepository.findByUserName(userName)
+                .orElseThrow(() -> new NotExistMemberException(MessageCode.DOES_NOT_EXIST_MEMBER.getMessage()));
 
         // Point 추가
         Level level = member.getLevel();

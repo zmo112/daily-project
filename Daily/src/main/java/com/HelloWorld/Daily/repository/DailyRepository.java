@@ -20,6 +20,7 @@ public interface DailyRepository extends JpaRepository<Daily, Long> {
     // 하루 내로 작성된 Daily가 있는지 확인
     @Query(value = "SELECT d " +
             "FROM Daily d " +
+            "join fetch d.member " +
             "WHERE d.member.userName = :memberName " +
             "AND month(d.createdAt) = month(CURRENT_TIMESTAMP)")
     Optional<Daily> findDailyInDay(@Param("memberName") String memberName);

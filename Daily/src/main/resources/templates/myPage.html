@@ -8,8 +8,12 @@
     <title>Daily Project</title>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+    <!-- Alert Library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </head>
 <style>
     #loadingImage {
@@ -23,6 +27,17 @@
         background: url('R1280x0-16.gif') 50% 50% no-repeat rgb(249, 249, 249);
         background-size: 10%; /* 이미지 크기를 50%로 줄임 */
         opacity: 0.7;
+    }
+
+    .gradient-custom-3 {
+    /* fallback for old browsers */
+    background: #84fab0;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
     }
 </style>
 
@@ -46,25 +61,27 @@
 </nav>
 
 <!-- Header-->
-<header class="py-5">
-    <div class="container px-lg-5">
-        <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
-            <div class="m-4 m-lg-5">
-                <h1 class="display-5 fw-bold">Welcome to Daily!</h1>
-                <p class="fs-4">My Page</p>
+<div class="gradient-custom-3">
+    <header class="py-5">
+        <div class="container px-lg-5">
+            <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+                <div class="m-4 m-lg-5">
+                    <h1 class="display-5 fw-bold">My Page</h1>
+                    <p class="fs-4">마이페이지에서 그동안 작성했던 글들을 관리해보세요!</p>
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<!-- Page Content-->
-<section class="pt-4">
-    <div class="container px-lg-5">
-        <!-- Page Features-->
-        <div class="row gx-lg-5" id="postList">
+    <!-- Page Content-->
+    <section class="pt-4">
+        <div class="container px-lg-5">
+            <!-- Page Features-->
+            <div class="row gx-lg-5" id="postList">
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <!-- Loading Bar -->
 <div class="loadingImage" id="loadingImage"></div>
@@ -81,86 +98,130 @@
 <!-- Responsive navbar-->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
-  // 무한 스크롤
-  // false이면 무한스크롤 중지 (모든 게시물 출력상태)
-  // 초기값 true로 설정했습니디.
-  var postScroll = true;
-
-  // 초기값으로 첫번째 게시물만 출력받도록 설정 && 스크롤시마다 게시글 5개가 추가 되도록 수정
-  var startId = 0;
-  var limit = 5
-
-  $(document).ready(function() {
-      // 게시글 목록 출력
-      postListDisplay(startId, limit);
-
-      if (postScroll === true) {
-          // 무한스크롤 함수 실행
-          $(window).scroll(scrollHandler);
+    // alert
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'center-center',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
       }
-  });
+    });
 
-  // 무한 스크롤 기능
-  function scrollHandler() {
-      console.log("scorll이 감지 되었습니다.");
+    // 무한 스크롤 기능
+    // false이면 무한스크롤 중지 (모든 게시물 출력상태)
+    // 초기값 true로 설정했습니디.
+    var postScroll = true;
 
-      // 스크롤이 화면 가장 아래에 닿으면 실행됨
-      if (postScroll === true && $(window).scrollTop() + $(window).height() >= $(document).height() - 30) {
-          console.log("scorll이 맨 바닥에 위치합니다.");
+    // 초기값으로 첫번째 게시물만 출력받도록 설정 && 스크롤시마다 게시글 5개가 추가 되도록 수정
+    var startId = 0;
+    var limit = 5
 
-          // 변경된 초기값으로 다시 목록이 출력됨
-          postListDisplay(startId, limit);
+    $(document).ready(function() {
+        // 게시글 목록 출력
+        postListDisplay(startId, limit);
 
-          // 초기값은 limit 값을 더한 값으로 설정
-          startId += limit;
+        if (postScroll === true) {
+            // 무한스크롤 함수 실행
+            $(window).scroll(scrollHandler);
+        }
+    });
 
-          console.log(startId);
+    function scrollHandler() {
+        // 스크롤이 화면 가장 아래에 닿으면 실행됨
+        if (postScroll === true && $(window).scrollTop() + $(window).height() >= $(document).height() - 30) {
 
-      }
-  }
+            // 변경된 초기값으로 다시 목록이 출력됨
+            postListDisplay(startId, limit);
 
-  //게시글 목록 출력
-  function postListDisplay(startId, limit) {
+            // 초기값은 limit 값을 더한 값으로 설정
+            startId += limit;
+        }
+    }
 
-      $.ajax({
-          method: "GET",
-          url: "my/dailies/" + startId + "/" + limit,
-          success: function(result) {
+    //게시글 목록 출력
+    function postListDisplay(startId, limit) {
 
-              // 출력 데이터가 없다면 무한스크롤을 false(중지상태)로 설정
-              if (result.data.responseDTOS.length === 0) {
-                  postScroll = false;
-                  console.log("더 이상 데이터가 없다요....ㅠ");
-              }
+        $.ajax({
+            method: "GET",
+            url: "my/dailies/" + startId + "/" + limit,
+            success: function(result) {
 
-              // 데이터가 있으면 목록 출력
+                // 출력 데이터가 없다면 무한스크롤을 false(중지상태)로 설정
+                if (result.data.responseDTOS.length === 0 || result.data.responseDTOS.length === 1) {
+                    postScroll = false;
+                }
+
+                // 데이터가 있으면 목록 출력
                 if (result.data.responseDTOS.length > 0) {
 
                     for (var i = 0; i < result.data.responseDTOS.length; i++) {
                         var postList = result.data.responseDTOS[i];
 
+                        var levelIcon;
+
+                        // 글쓴이의 레벨에 따른 이미지 변경
+                        switch(postList.authorLevel) {
+                            case 1:
+                                // Author Level 1에 대한 처리
+                                levelIcon = "<i class='bi bi-1-square-fill'></i>"
+                                break;
+                            case 2:
+                                // Author Level 2에 대한 처리
+                                levelIcon = "<i class='bi bi-2-square-fill'></i>"
+                                break;
+                            case 3:
+                                // Author Level 3에 대한 처리
+                                levelIcon = "<i class='bi bi-3-square-fill'></i>"
+                                break;
+                            case 4:
+                                // Author Level 4에 대한 처리
+                                levelIcon = "<i class='bi bi-4-square-fill'></i>"
+                                break;
+                            default:
+                                // 기타 레벨에 대한 처리
+                                levelIcon = "<i class='bi bi-c-square-fill'></i>"
+                                break;
+                        }
+
+                        // 좋아요에 따라 하트 이미지 변경 및 클릭 이벤트 핸들러 추가
+                        var svgIcon = postList.clickedLike ?
+                          "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + postList.dailyId + "\")'>" +
+                            "<path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314'/>" +
+                          "</svg>" :
+                          "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart' viewBox='0 0 16 16' onclick='sendLikeRequest(\"" + postList.dailyId + "\")'>" +
+                            "<path d='m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15'/>" +
+                          "</svg>";
+
                         var postElement2 =
-                            $("<div class='col-lg-6 col-xxl-4 mb-5'>" +
-                                "<div class='card bg-light border-0 h-100'>" +
-                                    "<div class='card-body text-center p-4 p-lg-5 pt-0 pt-lg-0'>" +
-                                        "<div class='feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4'>" +
-                                            "<i class='bi bi-collection'></i>" +
+                            $("<div class='col-lg-6 col-xxl-4 mb-5' data-daily-id='" + postList.dailyId + "'>" +
+                                "<div class='card border-success border-0 h-100'>" +
+                                    "<div class='card-body p-4 p-lg-5 pt-0 pt-lg-0'>" +
+                                        "<div class='feature bg-success bg-gradient text-white rounded-3 mb-4 mt-n4'>" +
+                                            levelIcon +
                                         "</div>" +
-                                        "<h2 class='fs-4 fw-bold'>" + postList.author + "</h2>" +
-                                        "<p class='mb-0'>감사</p>" +
-                                        "<ul class='list-group'>" +
-                                          "<li class='list-group-item'>" + postList.thanks1 + "</li>" +
-                                          "<li class='list-group-item'>" + postList.thanks2 + "</li>" +
-                                          "<li class='list-group-item'>" + postList.thanks3 + "</li>" +
+                                        "<h2 class='fs-3 fw-normal fst-italic text-center'>" + postList.author + "</h2>" +
+                                        "<p class='fs-5 fw-normal mb-0'>감사</p>" +
+                                        "<ul class='list-group list-group-flush'>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.thanks1 + "</p>" + "</li>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.thanks2 + "</p>" + "</li>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.thanks3 + "</p>" + "</li>" +
                                         "</ul>" +
                                         "<br />" +
-                                        "<p class='mb-0'>회개</p>" +
-                                        "<ul class='list-group'>" +
-                                          "<li class='list-group-item'>" + postList.penitence1 + "</li>" +
-                                          "<li class='list-group-item'>" + postList.penitence2 + "</li>" +
-                                          "<li class='list-group-item'>" + postList.penitence3 + "</li>" +
+                                        "<p class='fs-5 fw-normal mb-0'>회개</p>" +
+                                        "<ul class='list-group list-group-flush'>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.penitence1 + "</p>" + "</li>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.penitence2 + "</p>" + "</li>" +
+                                          "<li class='list-group-item'>" + "<p class='fw-lighter'>" + postList.penitence3 + "</p>" + "</li>" +
                                         "</ul>" +
-                                        + "<p class="text-start">" + postList.dailyLikeCnt + "</p>" +
+                                        "<br/>" +
+                                        "<div style='display: flex; align-items: center;'>" +
+                                          "<div class='like-icon'>" + svgIcon + "</div>" +
+                                          "<p class='fw-lighter text-start like-count' style='margin: 0 0 0 8px;'>" + postList.dailyLikeCnt + "</p>" +
+                                        "</div>" +
                                     "</div>" +
                                 "</div>" +
                             "</div>");
@@ -169,19 +230,19 @@
                 }
             },
 
-          beforeSend: function () {
-                  $("#loadingImage").show();
-              },
+            beforeSend: function () {
+                    $("#loadingImage").show();
+                },
 
-          complete: function () {
+            complete: function () {
+                $("#loadingImage").hide();
+                },
+
+            error: function(error) {
               $("#loadingImage").hide();
-              },
-
-          error: function(error) {
-            $("#loadingImage").hide();
-            console.log(error);
-          }
-      });
-  }
+              console.log(error);
+            }
+        });
+    }
 </script>
 </html>

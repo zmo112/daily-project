@@ -1,8 +1,2 @@
 
-œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ïı·‹8…ØºŠ2J$49f938ef-2b09-4e0b-99c6-fddc02c3b24a
-“
-java:S3655E"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(¶ûÈ8’ØºŠ2J$5f6f03d1-b491-4610-9ff8-7ae639684c96
-[
-java:S1854A"9Remove this useless assignment to local variable "daily".(Å¦Çéşÿÿÿÿ8ÍÜÀŠ2
-L
-java:S1481A"*Remove this unused "daily" local variable.(Å¦Çéşÿÿÿÿ8ÏÜÀŠ2
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ïı·‹8›ÑÄŒ2
